@@ -2,7 +2,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Callable
 import operator
-from utilities import compare_float
+from ray_tracer_challenge.utilities import *
 from functools import partial
 import math
 
@@ -11,24 +11,24 @@ class ITuple(ABC):
 
     @property
     @abstractmethod
-    def x1(self) -> float:
+    def x1(self) -> Number:
         """The first element of the tuple-like element"""
         ...
 
     @property
     @abstractmethod
-    def x2(self) -> float:
+    def x2(self) -> Number:
         """The second element of the tuple-like element"""
         ...
 
     @property
     @abstractmethod
-    def x3(self) -> float:
+    def x3(self) -> Number:
         """The third element of the tuple-like element"""
         ...
 
     @abstractmethod
-    def toTupleList(self) -> list[float]:
+    def toTupleList(self) -> list[Number]:
         """Converts a 3D tuple-like element to a list of length four consisting of
         the three components plus a fourth component. The list is essentially the
         homogeneous coordinate representation of the tuple.
@@ -36,14 +36,14 @@ class ITuple(ABC):
         ...
 
     @abstractmethod
-    def fromTupleList[Tuple](self, tuple_list: list[float]) -> type[Tuple]:
+    def fromTupleList(self, tuple_list: list[float]) -> ITuple:
         """Creates a 3D tuple-like element from a tuple list"""
         ...
 
 class Vector(ITuple):
     """Represents a 3D vector"""
 
-    def __init__(self, i, j, k):
+    def __init__(self, i: Number, j: Number, k: Number) -> None:
         """Creates a vector from the three components"""
         self.i = i
         self.j = j
@@ -113,9 +113,6 @@ class Vector(ITuple):
         """
         return f"vector({self.i}, {self.j}, {self.k})"
 
-    def __repr__(self):
-        self.__str__
-
     @property
     def sum(self) -> float:
         """Sum of all elements of a vector"""
@@ -138,21 +135,28 @@ class Vector(ITuple):
         return self / self.norm
 
     # Implements the ITuple interface methods to be treated like a tuple-like element
+    @property
+    def x1(self) -> Number:
+        return self.i
 
-    def x1(self): return self.i
-    def x2(self): return self.j
-    def x3(self): return self.k
+    @property
+    def x2(self) -> Number:
+        return self.j
 
-    def toTupleList(self):
+    @property
+    def x3(self) -> Number:
+        return self.k
+
+    def toTupleList(self) -> list[Number]:
         return [self.i, self.j, self.k]
 
-    def fromTupleList(self, tuple_list):
+    def fromTupleList(self, tuple_list: list[Number]) -> ITuple:
         return Vector(tuple_list[0], tuple_list[1], tuple_list[2])
 
 class Point(ITuple):
     """Represents a 3D point"""
 
-    def __init__(self, x, y, z):
+    def __init__(self, x: Number, y: Number, z: Number) -> None:
         """Creates a point from the three components"""
         self.x = x
         self.y = y
@@ -228,20 +232,25 @@ class Point(ITuple):
         converted to a string. This is helpful for printing a point.
         """
         return f"point({self.x}, {self.y}, {self.z})"
-    
-    def __repr__(self):
-        self.__str__
 
     # Implements the ITuple interface methods to be treated like a tuple-like element
 
-    def x1(self): return self.x
-    def x2(self): return self.y
-    def x3(self): return self.z
+    @property
+    def x1(self) -> Number:
+        return self.x
+    
+    @property
+    def x2(self) -> Number:
+        return self.y
+    
+    @property
+    def x3(self) -> Number:
+        return self.z
 
-    def toTupleList(self):
+    def toTupleList(self) -> list[Number]:
         return [self.x, self.y, self.z]
 
-    def fromTupleList(self, tuple_list):
+    def fromTupleList(self, tuple_list: list[Number]) -> ITuple:
         return Point(tuple_list[0], tuple_list[1], tuple_list[2])
 
 def dot_product(u: Vector, v: Vector) -> float:

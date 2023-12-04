@@ -1,6 +1,6 @@
 import unittest
 import math
-from tuples import *
+from ray_tracer_challenge.tuples import *
 
 class TestTuples(unittest.TestCase):
 

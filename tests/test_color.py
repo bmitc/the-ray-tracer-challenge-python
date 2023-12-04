@@ -1,6 +1,6 @@
 import unittest
 import math
-from color import *
+from ray_tracer_challenge.color import *
 
 class TestColor(unittest.TestCase):
 
