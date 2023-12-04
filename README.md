@@ -21,7 +21,7 @@ This installs all needed dependencies.
 
 ## Running tests, formatters, linters, and type checkers
 
-All of the following commands should be run at the repository's root.
+All of the following commands should be run at the repository's root. And all of these checks are currently run in a GitHub Action to verify that the code maintains full compliance with the checks.
 
 ### Unit tests
 
@@ -31,7 +31,7 @@ poetry run python -m unittest discover tests
 
 ### Mypy
 
-Mypy is configured in `pyproject.toml`.
+Mypy is configured in `pyproject.toml` to run in strict mode.
 
 ```
 poetry run mypy ray_tracer_challenge
