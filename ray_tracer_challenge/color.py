@@ -110,7 +110,7 @@ class Color:
 
         # Helper function to convert the values [0, 1] to [0, 255]
         def expand_to_byte(value: int | float) -> int:
-            return round(float(value) * 255.0 / 255.0)
+            return int(clamp_number(0, 255, value * 255.0))
 
         return [expand_to_byte(self.red), expand_to_byte(self.green), expand_to_byte(self.blue)]
 
