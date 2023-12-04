@@ -6,6 +6,7 @@ from ray_tracer_challenge.utilities import *
 from functools import partial
 import math
 
+
 class ITuple(ABC):
     """Interface used to convert 3D tuple-like elements to and from a 4D tuple"""
 
@@ -40,6 +41,7 @@ class ITuple(ABC):
         """Creates a 3D tuple-like element from a tuple list"""
         ...
 
+
 class Vector(ITuple):
     """Represents a 3D vector"""
 
@@ -63,7 +65,7 @@ class Vector(ITuple):
             return self.__map_element_wise(partial(operator.add, v))
         else:
             return self.__map_pair_wise(v, operator.add)
-    
+
     def __radd__(self, v: Vector | int | float) -> Vector:
         """Overloads the + operator for v + u"""
         return self * v
@@ -74,18 +76,18 @@ class Vector(ITuple):
             return self.__map_element_wise(lambda x: x - v)
         else:
             return self.__map_pair_wise(v, operator.sub)
-    
+
     def __rsub__(self, v: Vector | int | float) -> Vector:
         """Overloads the - operator for v - u"""
         return v + -self
-    
+
     def __mul__(self, v: Vector | int | float) -> Vector:
         """Overloads the * operator for u * v where v is a vector or numeric constant"""
         if isinstance(v, int | float):
             return self.__map_element_wise(partial(operator.mul, v))
         else:
             return self.__map_pair_wise(v, operator.mul)
-    
+
     def __rmul__(self, v: Vector | int | float) -> Vector:
         """Overloads the * operator for v * u where v is a vector or numeric constant"""
         return self * v
@@ -93,11 +95,11 @@ class Vector(ITuple):
     def __truediv__(self, c: int | float) -> Vector:
         """Overloads the / operator for u / c where c is a numeric constant"""
         return self.__map_element_wise(lambda x: x / c)
-    
+
     def __neg__(self) -> Vector:
         """Overloads the negation operator - for a vector, which negates each element"""
         return Vector(-self.i, -self.j, -self.k)
-    
+
     def __eq__(self, other: object) -> bool:
         """Overloads the == operator for custom equality checking for vectors. The elements are
         compared pair-wise and within a given epsilon.
@@ -105,7 +107,11 @@ class Vector(ITuple):
         if not isinstance(other, Vector):
             return NotImplemented
         else:
-            return compare_float(self.i, other.i) and compare_float(self.j, other.j) and compare_float(self.k, other.k)
+            return (
+                compare_float(self.i, other.i)
+                and compare_float(self.j, other.j)
+                and compare_float(self.k, other.k)
+            )
 
     def __str__(self) -> str:
         """Overloads the string conversion method to customize how a vector is
@@ -117,7 +123,7 @@ class Vector(ITuple):
     def sum(self) -> float:
         """Sum of all elements of a vector"""
         return self.i + self.j + self.k
-    
+
     @property
     def norm(self) -> float:
         """The norm of the vector, that is the square of the dot product"""
@@ -153,6 +159,7 @@ class Vector(ITuple):
     def fromTupleList(self, tuple_list: list[Number]) -> ITuple:
         return Vector(tuple_list[0], tuple_list[1], tuple_list[2])
 
+
 class Point(ITuple):
     """Represents a 3D point"""
 
@@ -179,7 +186,7 @@ class Point(ITuple):
             return Point(self.x + v.i, self.y + v.j, self.z + v.k)
         elif isinstance(q, int | float):
             return self.__map_element_wise(partial(operator.add, q))
-    
+
     def __radd__(self, q: Point | int | float) -> Point:
         """Overloads the + operator for q + p"""
         return self * q
@@ -195,29 +202,29 @@ class Point(ITuple):
             return Point(self.x - v.i, self.y - v.j, self.z - v.k)
         elif isinstance(q, int | float):
             return self.__map_element_wise(lambda x: x - q)
-    
+
     def __rsub__(self, c: float) -> Point:
         """Overloads the - operator for q - p"""
         return c + -self
-    
+
     def __mul__(self, v: Point | int | float) -> Point:
         """Overloads the * operator for u * v where v is a point or numeric constant"""
         if isinstance(v, int | float):
             return self.__map_element_wise(partial(operator.mul, v))
         else:
             return self.__map_pair_wise(v, operator.mul)
-    
+
     def __rmul__(self, c: float) -> Point:
         return self * c
 
     def __truediv__(self, c: int | float) -> Point:
         """Overloads the / operator for u / c where c is a numeric constant"""
         return self.__map_element_wise(lambda x: x / c)
-    
+
     def __neg__(self) -> Point:
         """Overloads the negation operator - for a point, which negates each element"""
         return Point(-self.x, -self.y, -self.z)
-    
+
     def __eq__(self, other: object) -> bool:
         """Overloads the == operator for custom equality checking for points. The elements are
         compared pair-wise and within a given epsilon.
@@ -225,7 +232,11 @@ class Point(ITuple):
         if not isinstance(other, Point):
             return NotImplemented
         else:
-            return compare_float(self.x, other.x) and compare_float(self.y, other.y) and compare_float(self.z, other.z)
+            return (
+                compare_float(self.x, other.x)
+                and compare_float(self.y, other.y)
+                and compare_float(self.z, other.z)
+            )
 
     def __str__(self) -> str:
         """Overloads the string conversion method to customize how a point is
@@ -238,11 +249,11 @@ class Point(ITuple):
     @property
     def x1(self) -> Number:
         return self.x
-    
+
     @property
     def x2(self) -> Number:
         return self.y
-    
+
     @property
     def x3(self) -> Number:
         return self.z
@@ -253,17 +264,16 @@ class Point(ITuple):
     def fromTupleList(self, tuple_list: list[Number]) -> ITuple:
         return Point(tuple_list[0], tuple_list[1], tuple_list[2])
 
+
 def dot_product(u: Vector, v: Vector) -> float:
     """Compute the dot product of two vectors"""
     return (u * v).sum
 
+
 def cross_product(u: Vector, v: Vector) -> Vector:
     """Compute the cross product of two vectors"""
-    return Vector(
-        u.j * v.k - v.j * u.k,
-        v.i * u.k - u.i * v.k,
-        u.i * v.j - v.i * u.j
-    )
+    return Vector(u.j * v.k - v.j * u.k, v.i * u.k - u.i * v.k, u.i * v.j - v.i * u.j)
+
 
 def reflect(vector: Vector, normal: Vector) -> Vector:
     """Calculates the reflection of the vector across the normal vector"""

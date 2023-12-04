@@ -2,8 +2,8 @@ import unittest
 import math
 from ray_tracer_challenge.color import *
 
-class TestColor(unittest.TestCase):
 
+class TestColor(unittest.TestCase):
     def test_colors_are_tuples(self):
         color = Color(-0.5, 0.4, 1.7)
         self.assertEqual(color.red, -0.5)
@@ -38,6 +38,6 @@ class TestColor(unittest.TestCase):
     def test_color_enum(self):
         self.assertEqual(Colors.Blue.value, Color(0, 0, 1))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
-    

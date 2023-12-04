@@ -28,3 +28,9 @@ to run all unit tests.
 ```
 poetry run mypy ray_tracer_challenge
 ```
+
+## Formatting
+
+```
+poetry run black .
+```

@@ -12,11 +12,13 @@ type Number = int | float
 # See: https://docs.python.org/3/library/typing.html#typing.Final
 EPSILON: Final[float] = 0.00001
 
+
 def compare_float(x: Number, y: Number) -> bool:
     """Compares two numbers by checking that their absolute difference is
     less than or equal to epsilon = 0.00001
     """
     return abs(x - y) <= EPSILON
+
 
 def clamp_number(number: Number, min: Number, max: Number) -> Number:
     """Clamps a number to be in the range [min, max]"""

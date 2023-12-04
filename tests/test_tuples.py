@@ -2,8 +2,8 @@ import unittest
 import math
 from ray_tracer_challenge.tuples import *
 
-class TestTuples(unittest.TestCase):
 
+class TestTuples(unittest.TestCase):
     def test_point_creates_tuples(self):
         p = Point(4, -4, 3)
         self.assertEqual(p.x, 4)
@@ -73,7 +73,10 @@ class TestTuples(unittest.TestCase):
 
     def test_normalizing_a_vector(self):
         self.assertEqual(Vector(4, 0, 0).normalize(), Vector(1, 0, 0))
-        self.assertEqual(Vector(1, 2, 3).normalize(), Vector(1/math.sqrt(14), 2/math.sqrt(14), 3/math.sqrt(14)))
+        self.assertEqual(
+            Vector(1, 2, 3).normalize(),
+            Vector(1 / math.sqrt(14), 2 / math.sqrt(14), 3 / math.sqrt(14)),
+        )
 
     def test_the_magnitude_of_a_normalized_vector(self):
         self.assertEqual(Vector(1, 2, 3).normalize().magnitude, 1)
@@ -96,11 +99,11 @@ class TestTuples(unittest.TestCase):
 
     def test_reflecting_a_vector_off_a_slanted_surface(self):
         u = Vector(0, -1, 0)
-        v = Vector(math.sqrt(2)/2, math.sqrt(2)/2, 0)
+        v = Vector(math.sqrt(2) / 2, math.sqrt(2) / 2, 0)
         print(reflect(u, v))
         print(reflect(u, v) == Vector(1, 0, 0))
         self.assertEqual(reflect(u, v), Vector(1, 0, 0))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
-    
