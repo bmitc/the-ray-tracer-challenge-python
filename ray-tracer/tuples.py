@@ -11,7 +11,7 @@ class ITuple(ABC):
 
     @property
     @abstractmethod
-    def x2(self) -> float:
+    def x1(self) -> float:
         """The first element of the tuple-like element"""
         ...
 
@@ -36,7 +36,7 @@ class ITuple(ABC):
         ...
 
     @abstractmethod
-    def fromTupleList[Tuple](self, tuple_list: list[float]) -> Tuple:
+    def fromTupleList[Tuple](self, tuple_list: list[float]) -> type[Tuple]:
         """Creates a 3D tuple-like element from a tuple list"""
         ...
 
@@ -98,11 +98,14 @@ class Vector(ITuple):
         """Overloads the negation operator - for a vector, which negates each element"""
         return Vector(-self.i, -self.j, -self.k)
     
-    def __eq__(self, v: Vector) -> bool:
+    def __eq__(self, other: object) -> bool:
         """Overloads the == operator for custom equality checking for vectors. The elements are
         compared pair-wise and within a given epsilon.
         """
-        return compare_float(self.i, v.i) and compare_float(self.j, v.j) and compare_float(self.k, v.k)
+        if not isinstance(other, Vector):
+            return NotImplemented
+        else:
+            return compare_float(self.i, other.i) and compare_float(self.j, other.j) and compare_float(self.k, other.k)
 
     def __str__(self) -> str:
         """Overloads the string conversion method to customize how a vector is
@@ -211,17 +214,20 @@ class Point(ITuple):
         """Overloads the negation operator - for a point, which negates each element"""
         return Point(-self.x, -self.y, -self.z)
     
-    def __eq__(self, v: Point) -> bool:
+    def __eq__(self, other: object) -> bool:
         """Overloads the == operator for custom equality checking for points. The elements are
         compared pair-wise and within a given epsilon.
         """
-        return compare_float(self.x, v.x) and compare_float(self.y, v.y) and compare_float(self.z, v.z)
+        if not isinstance(other, Point):
+            return NotImplemented
+        else:
+            return compare_float(self.x, other.x) and compare_float(self.y, other.y) and compare_float(self.z, other.z)
 
     def __str__(self) -> str:
         """Overloads the string conversion method to customize how a point is
         converted to a string. This is helpful for printing a point.
         """
-        return f"point({self.i}, {self.j}, {self.k})"
+        return f"point({self.x}, {self.y}, {self.z})"
     
     def __repr__(self):
         self.__str__
