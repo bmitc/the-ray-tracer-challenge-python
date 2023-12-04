@@ -1,3 +1,5 @@
+[![build and test](https://github.com/bmitc/the-ray-tracer-challenge-python/actions/workflows/build-and-test.yml/badge.svg?branch=main)](https://github.com/bmitc/the-ray-tracer-challenge-python/actions/workflows/build-and-test.yml)
+
 # The Ray Tracer Challenge in Python
 
 This repository is a Python implementation of the ray tracer found in [*The Ray Tracer Challenge: A Test-Driven Guide to Your First 3D Renderer*](https://pragprog.com/titles/jbtracer/the-ray-tracer-challenge/) by Jamis Buck.
