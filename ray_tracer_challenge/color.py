@@ -103,6 +103,17 @@ class Color:
         """Clamps a color's components to be in the range [minimum, maximum]"""
         return self.__map_element_wise(lambda x: clamp_number(x, minimum, maximum))
 
+    def as_rgb_list(self) -> list[int]:
+        """Converts the color to a list of RGB values, where each individual value
+        runs from 0 to 255 instead of 0 to 1.
+        """
+
+        # Helper function to convert the values [0, 1] to [0, 255]
+        def expand_to_byte(value: int | float) -> int:
+            return round(float(value) * 255.0 / 255.0)
+
+        return [expand_to_byte(self.red), expand_to_byte(self.green), expand_to_byte(self.blue)]
+
 
 def hadamard_product(c1: Color, c2: Color) -> Color:
     """Computes the Hadamard (or Schur) product of the colors"""

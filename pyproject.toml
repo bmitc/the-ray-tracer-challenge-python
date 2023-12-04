@@ -10,6 +10,11 @@ python = "^3.12"
 mypy = "^1.7.1"
 pylint = "^3.0.2"
 black = "^23.11.0"
+matplotlib = "^3.8.2"
+numpy = "^1.26.2"
+
+[tool.poetry.scripts]
+projectile = "ray_tracer_challenge.projectile:projectile"
 
 [build-system]
 requires = ["poetry-core"]
