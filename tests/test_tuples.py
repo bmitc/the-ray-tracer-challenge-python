@@ -100,8 +100,6 @@ class TestTuples(unittest.TestCase):
     def test_reflecting_a_vector_off_a_slanted_surface(self):
         u = Vector(0, -1, 0)
         v = Vector(math.sqrt(2) / 2, math.sqrt(2) / 2, 0)
-        print(reflect(u, v))
-        print(reflect(u, v) == Vector(1, 0, 0))
         self.assertEqual(reflect(u, v), Vector(1, 0, 0))
 
 

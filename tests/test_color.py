@@ -1,5 +1,4 @@
 import unittest
-import math
 from ray_tracer_challenge.color import *
 
 
@@ -28,7 +27,7 @@ class TestColor(unittest.TestCase):
         c2 = Color(0.9, 1, 0.1)
         self.assertEqual(c1 * c2, Color(0.9, 0.2, 0.04))
 
-    # Additional tests not in book
+    # Additional tests not in the book
 
     def test_multiplying_colors_is_the_hadamard_product(self):
         c1 = Color(1, 0.2, 0.4)
@@ -36,7 +35,7 @@ class TestColor(unittest.TestCase):
         self.assertEqual(c1 * c2, hadamard_product(c1, c2))
 
     def test_color_enum(self):
-        self.assertEqual(Colors.Blue.value, Color(0, 0, 1))
+        self.assertEqual(Colors.BLUE.value, Color(0, 0, 1))
 
 
 if __name__ == "__main__":

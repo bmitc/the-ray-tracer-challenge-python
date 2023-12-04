@@ -433,7 +433,8 @@ disable=raw-checker-failed,
         use-implicit-booleaness-not-comparison-to-zero,
         # Disabled checks added in addition to default disabled checks
         no-else-return,
-        unnecessary-ellipsis
+        unnecessary-ellipsis,
+        wildcard-import
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option

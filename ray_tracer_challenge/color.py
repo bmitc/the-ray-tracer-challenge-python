@@ -16,7 +16,7 @@ class Color:
     and 1.0, which is for calculations.
     """
 
-    def __init__(self, red: int | float, green: int | float, blue: int | float):
+    def __init__(self, red: int | float, green: int | float, blue: int | float) -> None:
         self.red = red
         self.green = green
         self.blue = blue
