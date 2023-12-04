@@ -1,3 +1,5 @@
+[![build and test](https://github.com/bmitc/the-ray-tracer-challenge-python/actions/workflows/build-and-test.yml/badge.svg?branch=main)](https://github.com/bmitc/the-ray-tracer-challenge-python/actions/workflows/build-and-test.yml)
+
 # The Ray Tracer Challenge in Python
 
 This repository is a Python implementation of the ray tracer found in [*The Ray Tracer Challenge: A Test-Driven Guide to Your First 3D Renderer*](https://pragprog.com/titles/jbtracer/the-ray-tracer-challenge/) by Jamis Buck.
@@ -19,7 +21,7 @@ This installs all needed dependencies.
 
 ## Running tests, formatters, linters, and type checkers
 
-All of the following commands should be run at the repository's root.
+All of the following commands should be run at the repository's root. And all of these checks are currently run in a GitHub Action to verify that the code maintains full compliance with the checks.
 
 ### Unit tests
 
@@ -29,7 +31,7 @@ poetry run python -m unittest discover tests
 
 ### Mypy
 
-Mypy is configured in `pyproject.toml`.
+Mypy is configured in `pyproject.toml` to run in strict mode.
 
 ```
 poetry run mypy ray_tracer_challenge
