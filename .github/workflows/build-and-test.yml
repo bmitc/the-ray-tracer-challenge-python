@@ -23,12 +23,12 @@ jobs:
         uses: abatilo/actions-poetry@v2
         with:
           poetry-version: ${{ matrix.poetry-version }}
-
-      - name: Install package
-        run: poetry install
           
-      - name: View poetry --help
+      - name: View poetry --help to verify Poetry is installed correctly
         run: poetry --help
+
+      - name: Install ray_tracer_challenge Poetry package 
+        run: poetry install
 
       - name: Check formatting using Black
         run: poetry run black . --check
