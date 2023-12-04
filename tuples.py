@@ -1,6 +1,6 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from typing import Type, Callable
+from typing import Callable
 import operator
 from utilities import compare_float
 from functools import partial
