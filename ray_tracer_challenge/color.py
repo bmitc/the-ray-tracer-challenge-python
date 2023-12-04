@@ -7,6 +7,7 @@ import operator
 from typing import Callable
 from ray_tracer_challenge.utilities import clamp_number, compare_float
 
+
 class Color:
     """Represents a color in terms of its red, green, and blue components.
     A value of 1.0 means that the component is fully saturated (i.e., at 100%) and a
