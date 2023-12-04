@@ -34,3 +34,9 @@ poetry run mypy ray_tracer_challenge
 ```
 poetry run black .
 ```
+
+## Run Pylint
+
+```
+poetry run pylint ray_tracer_challenge
+```

@@ -1,10 +1,12 @@
+"""Vector and point types and operations and a tuple interface"""
+
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from typing import Callable
-import operator
-from ray_tracer_challenge.utilities import *
 from functools import partial
 import math
+import operator
+from typing import Callable
+from ray_tracer_challenge.utilities import compare_float
 
 
 class ITuple(ABC):
@@ -12,24 +14,24 @@ class ITuple(ABC):
 
     @property
     @abstractmethod
-    def x1(self) -> Number:
+    def x1(self) -> int | float:
         """The first element of the tuple-like element"""
         ...
 
     @property
     @abstractmethod
-    def x2(self) -> Number:
+    def x2(self) -> int | float:
         """The second element of the tuple-like element"""
         ...
 
     @property
     @abstractmethod
-    def x3(self) -> Number:
+    def x3(self) -> int | float:
         """The third element of the tuple-like element"""
         ...
 
     @abstractmethod
-    def toTupleList(self) -> list[Number]:
+    def to_tuple_list(self) -> list[int | float]:
         """Converts a 3D tuple-like element to a list of length four consisting of
         the three components plus a fourth component. The list is essentially the
         homogeneous coordinate representation of the tuple.
@@ -37,7 +39,7 @@ class ITuple(ABC):
         ...
 
     @abstractmethod
-    def fromTupleList(self, tuple_list: list[float]) -> ITuple:
+    def from_tuple_list(self, tuple_list: list[float]) -> ITuple:
         """Creates a 3D tuple-like element from a tuple list"""
         ...
 
@@ -45,19 +47,19 @@ class ITuple(ABC):
 class Vector(ITuple):
     """Represents a 3D vector"""
 
-    def __init__(self, i: Number, j: Number, k: Number) -> None:
+    def __init__(self, i: int | float, j: int | float, k: int | float) -> None:
         """Creates a vector from the three components"""
         self.i = i
         self.j = j
         self.k = k
 
-    def __map_element_wise(self, operator: Callable[[float], float]) -> Vector:
+    def __map_element_wise(self, op: Callable[[float], float]) -> Vector:
         """Maps the operation to each element of the vector"""
-        return Vector(operator(self.i), operator(self.j), operator(self.k))
+        return Vector(op(self.i), op(self.j), op(self.k))
 
-    def __map_pair_wise(self, v: Vector, operator: Callable[[float, float], float]) -> Vector:
+    def __map_pair_wise(self, v: Vector, op: Callable[[float, float], float]) -> Vector:
         """Maps the operation pairwise across two vectors"""
-        return Vector(operator(self.i, v.i), operator(self.j, v.j), operator(self.k, v.k))
+        return Vector(op(self.i, v.i), op(self.j, v.j), op(self.k, v.k))
 
     def __add__(self, v: Vector | int | float) -> Vector:
         """Overloads the + operator for u + v where v is a vector or numeric constant"""
@@ -142,40 +144,40 @@ class Vector(ITuple):
 
     # Implements the ITuple interface methods to be treated like a tuple-like element
     @property
-    def x1(self) -> Number:
+    def x1(self) -> int | float:
         return self.i
 
     @property
-    def x2(self) -> Number:
+    def x2(self) -> int | float:
         return self.j
 
     @property
-    def x3(self) -> Number:
+    def x3(self) -> int | float:
         return self.k
 
-    def toTupleList(self) -> list[Number]:
+    def to_tuple_list(self) -> list[int | float]:
         return [self.i, self.j, self.k]
 
-    def fromTupleList(self, tuple_list: list[Number]) -> ITuple:
+    def from_tuple_list(self, tuple_list: list[int | float]) -> ITuple:
         return Vector(tuple_list[0], tuple_list[1], tuple_list[2])
 
 
 class Point(ITuple):
     """Represents a 3D point"""
 
-    def __init__(self, x: Number, y: Number, z: Number) -> None:
+    def __init__(self, x: int | float, y: int | float, z: int | float) -> None:
         """Creates a point from the three components"""
         self.x = x
         self.y = y
         self.z = z
 
-    def __map_element_wise(self, operator: Callable[[float], float]) -> Point:
+    def __map_element_wise(self, op: Callable[[float], float]) -> Point:
         """Maps the operation to each element of the point"""
-        return Point(operator(self.x), operator(self.y), operator(self.z))
+        return Point(op(self.x), op(self.y), op(self.z))
 
-    def __map_pair_wise(self, v: Point, operator: Callable[[float, float], float]) -> Point:
+    def __map_pair_wise(self, v: Point, op: Callable[[float, float], float]) -> Point:
         """Maps the operation pairwise across two points"""
-        return Point(operator(self.x, v.x), operator(self.y, v.y), operator(self.z, v.z))
+        return Point(op(self.x, v.x), op(self.y, v.y), op(self.z, v.z))
 
     def __add__(self, q: Point | Vector | int | float) -> Point:
         """Overloads the + operator for p + q where q is a point, vector, or numeric constant"""
@@ -186,6 +188,8 @@ class Point(ITuple):
             return Point(self.x + v.i, self.y + v.j, self.z + v.k)
         elif isinstance(q, int | float):
             return self.__map_element_wise(partial(operator.add, q))
+        else:
+            return NotImplemented
 
     def __radd__(self, q: Point | int | float) -> Point:
         """Overloads the + operator for q + p"""
@@ -202,6 +206,8 @@ class Point(ITuple):
             return Point(self.x - v.i, self.y - v.j, self.z - v.k)
         elif isinstance(q, int | float):
             return self.__map_element_wise(lambda x: x - q)
+        else:
+            return NotImplemented
 
     def __rsub__(self, c: float) -> Point:
         """Overloads the - operator for q - p"""
@@ -247,21 +253,21 @@ class Point(ITuple):
     # Implements the ITuple interface methods to be treated like a tuple-like element
 
     @property
-    def x1(self) -> Number:
+    def x1(self) -> int | float:
         return self.x
 
     @property
-    def x2(self) -> Number:
+    def x2(self) -> int | float:
         return self.y
 
     @property
-    def x3(self) -> Number:
+    def x3(self) -> int | float:
         return self.z
 
-    def toTupleList(self) -> list[Number]:
+    def to_tuple_list(self) -> list[int | float]:
         return [self.x, self.y, self.z]
 
-    def fromTupleList(self, tuple_list: list[Number]) -> ITuple:
+    def from_tuple_list(self, tuple_list: list[int | float]) -> ITuple:
         return Point(tuple_list[0], tuple_list[1], tuple_list[2])
 
 

@@ -1,11 +1,6 @@
-from typing import Final
+"""A collection of utility functions"""
 
-# TODO: Mypy currently does not support the `type` statement from PEP 695 which
-# was added in Python 3.12. However, Mypy also does not support suppressing errors
-# for this either. So currently, this line will generate a [valid-type] Mypy error.
-# For more information, see GitHub issue https://github.com/python/mypy/issues/16607.
-type Number = int | float
-"""Represents a scalar number that is either an integer or float"""
+from typing import Final
 
 # Constant for use in comparing floats within the ray tracer.
 # Marking this as Final disallows any reassignment.
@@ -13,18 +8,18 @@ type Number = int | float
 EPSILON: Final[float] = 0.00001
 
 
-def compare_float(x: Number, y: Number) -> bool:
+def compare_float(x: int | float, y: int | float) -> bool:
     """Compares two numbers by checking that their absolute difference is
     less than or equal to epsilon = 0.00001
     """
     return abs(x - y) <= EPSILON
 
 
-def clamp_number(number: Number, min: Number, max: Number) -> Number:
-    """Clamps a number to be in the range [min, max]"""
-    if number >= max:
-        return max
-    elif number <= min:
-        return min
+def clamp_number(number: int | float, minimum: int | float, maximum: int | float) -> int | float:
+    """Clamps a number to be in the range [minimum, maximum]"""
+    if number >= maximum:
+        return maximum
+    elif number <= minimum:
+        return minimum
     else:
         return number
